@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Look at all the happy people</title>
+  </head>
+
+ <body>
+    <table border=1>
+      <tr>
+        <th>First Name</th><th>Middle Name</th><th>Last Name</th>
+      </tr>
+
+      {% for name in people %}
+      <tr>
+        <td>{{name['first']}}</td><td>{{name['middle']}}</td><td>{{name['last']}}</td>
+      </tr>
+      {% endfor %}
+
+      </tr>
+    </table>
+ </body>
+</html>
