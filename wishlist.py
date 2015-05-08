@@ -1,24 +1,31 @@
+#!/usr/bin/env python
 import csv
 import os
 
 
 class Wishlist:
 
+    filename = 'items.txt'
+
     def __init__(self):
         pass
 
     def read_csv(self):
         '''Read in csv file'''
-        filename = 'list.txt'
-        if not os.path.isfile(filename):
+        if not os.path.isfile(self.filename):
             return []
-        rows = csv.DictReader(open(filename))
-        items = [row for row in rows]
-        return items
+        with open(self.filename) as csvfile:
+            rows = csv.DictReader(csvfile)
+            items = [row for row in rows]
+            return items
 
-    def write_csv(self):
+    def write_csv(self, name, quantity, price):
         '''Write out csv file'''
-        pass
+        with open(self.filename, 'a') as csvfile:
+            fieldnames = ['name', 'quantity', 'price']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            # writer.writeheader()
+            writer.writerow({'name': name, 'quantity': quantity, 'price': price})
 
     def get_list(self):
         # This function seams redundant to me.
