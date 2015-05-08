@@ -5,14 +5,23 @@ from wishlist import Wishlist
 app = Flask(__name__)
 app.debug = True
 
+
 @app.route('/')
 def home():
     wishlist = Wishlist()
-    # items = wishlist.get_list()
-    items = wishlist.total_count()
+    items = wishlist.get_list()
+    for item in items:
+        items = wishlist.total_count()
+        types = wishlist.total_type()
     total = wishlist.total_cost()
-    # return render_template('index.html', num_item=len(items), total=total)
-    return render_template('index.html', num_item=items, total=total)
+    return render_template('index.html', type_item=types, num_item=items, total=total)
+
+
+@app.route('/view')
+def view():
+    wishlist = Wishlist()
+    items = wishlist.get_list()
+    return render_template('view.html', items=items)
 
 
 @app.route('/dan')
