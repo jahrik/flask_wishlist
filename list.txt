@@ -1,0 +1,6 @@
+name,quantity,price
+keyboard,2,110
+mouse,3,10
+rock,5,1
+ball,30,10
+alligator,50,1000
