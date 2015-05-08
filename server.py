@@ -1,12 +1,15 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template 
+from flask import request
+from flask import flash
 from wishlist import Wishlist
 
 app = Flask(__name__)
+app.secret_key = 'some_secret'
 app.debug = True
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
     wishlist = Wishlist()
     items = wishlist.get_list()
@@ -14,6 +17,16 @@ def home():
         items = wishlist.total_count()
         types = wishlist.total_type()
     total = wishlist.total_cost()
+    if request.method == 'POST':
+        name = request.form['name']
+        quantity = request.form['quantity']
+        price = request.form['price']
+        if name and quantity and price:
+            wishlist.write_csv(name, quantity, price)
+        else:
+            flash('Please fill in all forms!')
+    else:
+        pass
     return render_template('index.html', type_item=types, num_item=items, total=total)
 
 

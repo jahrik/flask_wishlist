@@ -20,8 +20,8 @@
     </tr>
     <tr>
       <td>Item:</td>
-      <td><label for="item"></label>
-      <input type="text" name="item" id="item" /></td>
+      <td><label for="name"></label>
+      <input type="text" name="name" id="name" /></td>
     </tr>
     <tr>
       <td>Quantity:</td>
@@ -44,5 +44,14 @@
   </table>
 </form>
 <p>&nbsp;</p>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 </body>
 </html>
