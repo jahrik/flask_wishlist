@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template 
+from flask import render_template
 from flask import request
 from flask import flash
 from wishlist import Wishlist
@@ -13,21 +13,24 @@ app.debug = True
 def home():
     wishlist = Wishlist()
     items = wishlist.get_list()
-    for item in items:
-        items = wishlist.total_count()
-        types = wishlist.total_type()
+    total_count = wishlist.total_count()
+    total_types = wishlist.total_type()
     total = wishlist.total_cost()
+
     if request.method == 'POST':
         name = request.form['name']
         quantity = request.form['quantity']
         price = request.form['price']
-        if name and quantity and price:
-            wishlist.write_csv(name, quantity, price)
+        if not name or not quantity or not price:
+            flash('Please go fuck yourself!')
         else:
-            flash('Please fill in all forms!')
+            item = {'name': name, 'quantity': quantity, 'price': price}
+            items.append(item)
+            wishlist.write_csv(items)
     else:
         pass
-    return render_template('index.html', type_item=types, num_item=items, total=total)
+
+    return render_template('index.html', type_item=total_types, num_item=total_count, total=total)
 
 
 @app.route('/view')

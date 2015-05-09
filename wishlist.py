@@ -1,6 +1,6 @@
-#!/usr/bin/env python
 import csv
 import os
+from flask import flash
 
 
 class Wishlist:
@@ -14,22 +14,27 @@ class Wishlist:
         '''Read in csv file'''
         if not os.path.isfile(self.filename):
             return []
-        with open(self.filename) as csvfile:
+        with open(self.filename, 'r') as csvfile:
             rows = csv.DictReader(csvfile)
             items = [row for row in rows]
             return items
 
-    def write_csv(self, name, quantity, price):
+    def write_csv(self, items):
         '''Write out csv file'''
-        with open(self.filename, 'a') as csvfile:
+        with open(self.filename, 'w+') as csvfile:
             fieldnames = ['name', 'quantity', 'price']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            # writer.writeheader()
-            writer.writerow({'name': name, 'quantity': quantity, 'price': price})
+            writer.writeheader()
+            for item in items:
+                try:
+                    writer.writerow(item)
+                except:
+                    flash('Item not added!')
+            
+            flash('Item added :-)')
+
 
     def get_list(self):
-        # This function seams redundant to me.
-        # Can we just use read_csv()?
         items = self.read_csv()
         return items
 

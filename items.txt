@@ -1,3 +1,10 @@
 name,quantity,price
-taco,3,2
-burrito,40,1
+taco,1,1
+farts,5,10
+asdf,1,4
+fdsa,1,1
+fdsa,1,1
+item,1,1
+taco,1,2
+shoes,5000,100
+llama,25,1
